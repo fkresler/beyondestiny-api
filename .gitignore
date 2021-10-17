@@ -1,0 +1,7 @@
+# generated
+coverage/
+dist/
+node_modules/
+
+# environment
+.env

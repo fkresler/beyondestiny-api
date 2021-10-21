@@ -32,12 +32,17 @@ router.get('/database', async (ctx) => {
     const result = await getDestinyManifestSlice(httpClient, {
       destinyManifest: manifestResponse.Response,
       language: 'en',
-      tableNames: ['DestinyInventoryItemDefinition', 'DestinyCollectibleDefinition', 'DestinyItemCategoryDefinition', 'DestinyInventoryBucketDefinition'],
+      tableNames: [
+        'DestinyInventoryItemDefinition',
+        'DestinyCollectibleDefinition',
+        'DestinyItemCategoryDefinition',
+        'DestinyInventoryBucketDefinition',
+      ],
     });
     fs.writeFileSync('inventory.json', JSON.stringify(result.DestinyInventoryItemDefinition));
     fs.writeFileSync('collectibles.json', JSON.stringify(result.DestinyCollectibleDefinition));
     fs.writeFileSync('categories.json', JSON.stringify(result.DestinyItemCategoryDefinition));
-    fs.writeFileSync('inventorybucket.json', JSON.stringify(result.DestinyInventoryBucketDefinition));
+    fs.writeFileSync('buckets.json', JSON.stringify(result.DestinyInventoryBucketDefinition));
     ctx.status = 200;
     ctx.body = 'uwu';
   } catch (e) {

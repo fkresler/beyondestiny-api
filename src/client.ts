@@ -18,7 +18,6 @@ export class HttpClientGenerator {
           headers: { 'X-API-Key': this.apiKey, ...(httpConfig.body && { 'Content-Type': 'application/json' }) },
         });
         const data = await result.json();
-        console.info('Fetching was successful with response:', data);
         return data;
       } catch (e) {
         console.error('Fetching caught an error:', e);

@@ -9,7 +9,7 @@
     "build": "yarn lint && yarn build:ts",
     "build:ts": "tsc",
     "start": "node --es-module-specifier-resolution=node dist/server.js",
-    "start:watch": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/server.ts"
+    "start:watch": "nodemon --ignore tests/ --watch src -e ts,tsx --exec node --loader ts-node/esm src/server.ts"
   },
   "keywords": [
     "destiny",

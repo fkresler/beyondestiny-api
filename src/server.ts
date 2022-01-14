@@ -1,32 +1,35 @@
 import Koa from 'koa';
 import Router from '@koa/router';
-import { getDestinyManifest } from 'bungie-api-ts/destiny2';
 import { config } from './config';
-import { HttpClientGenerator } from './client';
 
-import { weaponApi } from './weaponApi';
+import { WeaponManager } from './weaponApi';
 
 const app = new Koa();
 const router = new Router();
-const clientGenerator = new HttpClientGenerator();
+
+const weaponManager = new WeaponManager();
 
 router.get('/', (ctx) => {
   ctx.status = 200;
   ctx.body = { success: true };
 });
 
-router.get('/manifest', async (ctx) => {
+router.get('/weapons', async (ctx) => {
   try {
-    const result = await getDestinyManifest(clientGenerator.getClient());
+    const data = await weaponManager.getWeaponDefinitions();
     ctx.status = 200;
-    ctx.body = result.Response;
+    ctx.body = {
+      success: true,
+      data,
+    };
   } catch (e) {
-    ctx.status = 500;
-    ctx.body = e;
+    ctx.status = 503;
+    ctx.body = {
+      success: false,
+      data: e,
+    };
   }
 });
-
-router.get('/database', async (ctx) => weaponApi(ctx));
 
 app.use(router.routes());
 app.use(router.allowedMethods());
